@@ -26,14 +26,14 @@ res = re.findall(r'\w+', content)
 # insere todas as palavras no banco de dados
 for word in res:
     count = 0
-    c.execute(f"SELECT 1 FROM words WHERE word='{word}'")
+    c.execute(f"SELECT 1 FROM words WHERE word='{word.lower()}'")
     data = c.fetchall()
     if data:
         count = count + 1
         print(f'Found word {data}: {count}')
     else:
         print('Not found.')
-        c.execute(f"INSERT INTO words VALUES ('{word}', datetime('now'))")
+        c.execute(f"INSERT INTO words VALUES ('{word.lower()}', datetime('now'))")
 
 c.execute("SELECT rowid, * FROM words")
 # c.execute("SELECT * FROM customers WHERE first_name = 'Tim'")

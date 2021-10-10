@@ -25,11 +25,25 @@ c.execute("SELECT * FROM words")
 items = c.fetchall()
 
 if len(sys.argv) > 1:
-    if sys.argv[1] == 'amount':
+    if sys.argv[1] == '-A':
         print(f'Words: {len(items)}')
+    elif sys.argv[1].isnumeric():
+        print('ID search:')
+        c.execute(f"SELECT rowid, * FROM words WHERE rowid='{sys.argv[1]}'")
+        items = c.fetchall()
+        for item in items:
+            print(item)
+    else:
+        print('Word search:')
+        c.execute(f"SELECT rowid, * FROM words WHERE word='{sys.argv[1]}'")
+        items = c.fetchall()
+        for item in items:
+            print(item)  
 else:
     for item in items:
         print(item)
+
+    
 
 
 
